@@ -1,5 +1,8 @@
-[vaultservers]
-localhost
+[activehost]
+10.8.183.81
+
+[standbyhost]
+10.8.183.82
 
 [vaultservers:vars]
 vault_version=0.10.3
