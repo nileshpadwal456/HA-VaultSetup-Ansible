@@ -1,0 +1,37 @@
+---
+  - name: Install unzip
+    package:
+      name: unzip
+      update_cache: yes
+    become: true
+
+  - name: Download and install vault binary
+    unarchive:
+      src: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip"
+      dest: /usr/bin/
+      remote_src: True
+    become: true
+
+  - name: Create vault config directory
+    file: state=directory path=/etc/vault/
+    become: true
+
+  - name: Copy vault config to server
+    copy: src=vaultconfig.hcl dest=/etc/vault/
+    become: true
+
+  - name: Create vault-data dir
+    file: state=directory path=/vault-data/
+    become: true
+
+
+  - name: Copy vault service to server
+    copy: src=vault.service dest=/etc/systemd/system/vault.service
+    become: true
+
+  - name: Start vault service
+    systemd:
+      state: started
+      name: vault
+      daemon_reload: yes
+    become: true

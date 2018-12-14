@@ -1,0 +1,7 @@
+---
+- hosts: activehost
+  roles:
+    - role: vault-active-deploy
+- hosts: standbyhost
+  roles:
+    - role: vault-standby-deploy
