@@ -14,7 +14,7 @@ Requires=network-online.target
 After=network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/vault server -config=/etc/vault/config.hcl -log-level=debug
+ExecStart=/usr/local/bin/vault server -config=/etc/vault/vaultconfig.hcl -log-level=debug
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 KillSignal=SIGTERM
