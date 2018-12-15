@@ -4,8 +4,7 @@ listener "tcp" {
   tls_disable = "true"
 }
 
-storage "consul" {
-  address = "127.0.0.1:8500"
+storage "file" {
   path    = "/vault-data/"
 }
 ui = true

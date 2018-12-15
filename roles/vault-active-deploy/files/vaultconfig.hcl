@@ -3,8 +3,7 @@ listener "tcp" {
   cluster_address  = "0.0.0.0:8201"
   tls_disable = "true"
 }
-storage "consul" {
-  address = "127.0.0.1:8500"
+storage "file" {
   path    = "/vault-data/"
 }
 
