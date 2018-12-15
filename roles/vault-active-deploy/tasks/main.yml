@@ -7,7 +7,7 @@
 
   - name: Download and install vault binary
     unarchive:
-      src: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip"
+      src: "https://releases.hashicorp.com/vault/1.0.0/vault_1.0.0_linux_amd64.zip"
       dest: /usr/bin/
       remote_src: True
     become: true
