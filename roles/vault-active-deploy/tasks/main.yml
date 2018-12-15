@@ -7,26 +7,21 @@
 
   - name: Download and install vault binary
     unarchive:
-      src: "https://releases.hashicorp.com/vault/1.0.0/vault_1.0.0_linux_amd64.zip"
+      src: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip"
       dest: /usr/bin/
       remote_src: True
     become: true
 
   - name: Create vault config directory
-    file: state=directory path=/etc/vault/
+    file: state=directory path=/etc/opt/vault/
     become: true
 
   - name: Copy vault config to server
-    copy: src=vaultconfig.hcl dest=/etc/vault/
+    copy: src=vaultconfig.hcl dest=/etc/opt/vault/
     become: true
-
-  - name: Create vault-data dir
-    file: state=directory path=/vault-data/
-    become: true
-
 
   - name: Copy vault service to server
-    copy: src=vault.service dest=/etc/systemd/system/vault.service
+    copy: src=vault.service dest=/usr/lib/systemd/system/vault.service
     become: true
 
   - name: Start vault service
@@ -35,3 +30,14 @@
       name: vault
       daemon_reload: yes
     become: true
+
+  - pause:
+      seconds: 15
+
+  - name: Initialize the vault
+    command: vault operator init
+    register: keys
+    environment:
+      VAULT_ADDR: "http://127.0.0.1:8200"
+
+  - debug: msg="{{ keys }}"
